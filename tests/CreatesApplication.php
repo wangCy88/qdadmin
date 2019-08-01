@@ -22,4 +22,6 @@ trait CreatesApplication
 
         return $app;
     }
+    
+    
 }

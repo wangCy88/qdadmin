@@ -1,0 +1,3 @@
+[2019-07-22 14:54:04]:{"cardId":"3","user_id":"1","amount":0.01,"order_no":"order_20190722145404wCYt5ACe","described":"\u5361\u5238\u652f\u4ed8","type":1,"product_id":3}
+[2019-07-22 14:57:22]:{"cardId":"3","user_id":"1","amount":0.01,"order_no":"order_20190722145722T6t01AKT","described":"\u5361\u5238\u652f\u4ed8","type":1,"product_id":3}
+[2019-07-22 14:58:36]:{"cardId":"3","user_id":"1","amount":0.01,"order_no":"order_20190722145836Z45bm6jx","described":"\u5361\u5238\u652f\u4ed8","type":1,"product_id":3}

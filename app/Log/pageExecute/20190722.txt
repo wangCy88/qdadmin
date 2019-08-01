@@ -1,0 +1,4 @@
+[2019-07-22 14:52:19]:request:{}
+[2019-07-22 14:52:19]:request:{"app_id":"2018012502069457","version":"1.0","format":"json","sign_type":"RSA2","method":"alipay.trade.wap.pay","timestamp":"2019-07-22 14:52:19","alipay_sdk":"alipay-sdk-php-20180705","terminal_type":null,"terminal_info":null,"prod_code":null,"notify_url":"https:\/\/cv.chuwine.com\/repayMentNotifyUrl","return_url":"","charset":"UTF-8"}
+[2019-07-22 14:52:43]:request:{}
+[2019-07-22 14:52:43]:request:{"app_id":"2018012502069457","version":"1.0","format":"json","sign_type":"RSA2","method":"alipay.trade.wap.pay","timestamp":"2019-07-22 14:52:43","alipay_sdk":"alipay-sdk-php-20180705","terminal_type":null,"terminal_info":null,"prod_code":null,"notify_url":"https:\/\/cv.chuwine.com\/repayMentNotifyUrl","return_url":"","charset":"UTF-8"}

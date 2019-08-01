@@ -1,0 +1,1 @@
+[2019-07-29 11:45:13]:Request:{"user_id":"1","name":"23111","id_number":"3413412121241242","bank_card":"132312313123","msgCode":"111","phone":"13552204244","bankName":"\u4ea4\u901a\u94f6\u884c","bankAbribge":"BOCO","\/bindBankCard":null}

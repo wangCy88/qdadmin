@@ -1,0 +1,3 @@
+[2019-07-22 14:57:23]:支付返回值：{"tradeStatus":"FINI","desc":"\u6210\u529f","tradeNo":"201907221457242014100424178434","finishDate":"20190722145725","outTradeNo":"order_20190722145722T6t01AKT","code":"0000","currency":"CNY","tradeAmount":"1","tradeSubject":"\u8ba2\u5355\u6458\u8981","inMerchantNo":"110358850003","inCustomerNo":"360080004002741166"}
+[2019-07-22 14:58:38]:支付返回值：{"tradeStatus":"FINI","desc":"\u6210\u529f","tradeNo":"201907221458382013720705463610","finishDate":"20190722145840","outTradeNo":"order_20190722145836Z45bm6jx","code":"0000","currency":"CNY","tradeAmount":"1","tradeSubject":"\u8ba2\u5355\u6458\u8981","inMerchantNo":"110358850003","inCustomerNo":"360080004002741166"}
+[2019-07-22 14:58:38]:申请成功

@@ -1,0 +1,5 @@
+[2019-07-20 22:22:14]:request:{"user_id":"1"}
+[2019-07-20 22:22:27]:request:{"user_id":"1","bank_id":"1"}
+[2019-07-20 22:22:32]:request:{"user_id":"1","bank_id":"2"}
+[2019-07-20 22:24:18]:request:{"user_id":"1","bank_id":"2"}
+[2019-07-20 22:24:54]:request:{"user_id":"1","bank_id":"1"}

@@ -1,0 +1,13 @@
+[2019-07-20 15:22:14]:发送绑卡验证码返回:{"desc":"成功","outTradeNo":"5d32c12662beb","code":"0000","agreementStatus":"WPAR","payTool":"COLL","tradeSubject":"协议描述","inMerchantNo":"110358850003","inCustomerNo":"360080004002741166","agreementNo":"2019072020979752903"}
+[2019-07-20 15:25:27]:发送绑卡验证码返回:{"desc":"成功","outTradeNo":"5d32c1e6de7b7","code":"0000","agreementStatus":"WPAR","payTool":"COLL","tradeSubject":"协议描述","inMerchantNo":"110358850003","inCustomerNo":"360080004002741166","agreementNo":"2019072020229992700"}
+[2019-07-20 15:25:27]:发送绑卡验证码成功:
+[2019-07-20 15:26:13]:发送绑卡验证码返回:{"desc":"成功","outTradeNo":"5d32c215469a3","code":"0000","agreementStatus":"WPAR","payTool":"COLL","tradeSubject":"协议描述","inMerchantNo":"110358850003","inCustomerNo":"360080004002741166","agreementNo":"2019072020449947314"}
+[2019-07-20 15:26:13]:发送绑卡验证码成功:
+[2019-07-20 15:26:32]:发送绑卡验证码返回:{"desc":"成功","outTradeNo":"5d32c2283ae0b","code":"0000","agreementStatus":"WPAR","payTool":"COLL","tradeSubject":"协议描述","inMerchantNo":"110358850003","inCustomerNo":"360080004002741166","agreementNo":"2019072020949994498"}
+[2019-07-20 15:26:32]:发送绑卡验证码成功:
+[2019-07-20 15:26:58]:发送绑卡验证码返回:{"desc":"成功","outTradeNo":"5d32c241e7a23","code":"0000","agreementStatus":"WPAR","payTool":"COLL","tradeSubject":"协议描述","inMerchantNo":"110358850003","inCustomerNo":"360080004002741166","agreementNo":"2019072020989929400"}
+[2019-07-20 15:26:58]:发送绑卡验证码成功:
+[2019-07-20 15:30:40]:发送绑卡验证码返回:{"desc":"成功","outTradeNo":"5d32c31f9756a","code":"0000","agreementStatus":"WPAR","payTool":"COLL","tradeSubject":"协议描述","inMerchantNo":"110358850003","inCustomerNo":"360080004002741166","agreementNo":"2019072020419996632"}
+[2019-07-20 15:30:40]:发送绑卡验证码成功:
+[2019-07-20 16:32:26]:发送绑卡验证码返回:{"desc":"成功","outTradeNo":"5d32d199eff4b","code":"0000","agreementStatus":"WPAR","payTool":"COLL","tradeSubject":"协议描述","inMerchantNo":"110358850003","inCustomerNo":"360080004002741166","agreementNo":"2019072020920031073"}
+[2019-07-20 16:32:26]:发送绑卡验证码成功:

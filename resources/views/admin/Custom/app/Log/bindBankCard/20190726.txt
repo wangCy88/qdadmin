@@ -1,0 +1,2 @@
+[2019-07-26 13:52:56]:Request:{"user_id":"1","bank_card":"6222600620026013659","name":"\u738b\u6668\u9633","id_number":"411282199010295070","phone":"17639811057","bankAbribge":"BCM","bankName":"\u4ea4\u901a\u94f6\u884c","msgCode":"770911","\/bindBankCard":null}
+[2019-07-26 14:01:21]:Request:{"user_id":"1","name":"412341234","id_number":"324123412341234123","bank_card":"123412423412341234","msgCode":"12321","phone":"134123314131","bankName":"\u4ea4\u901a\u94f6\u884c","bankAbribge":"BOCO","\/bindBankCard":null}

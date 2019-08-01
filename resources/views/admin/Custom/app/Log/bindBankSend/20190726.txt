@@ -1,0 +1,6 @@
+[2019-07-26 13:55:44]:发送绑卡验证码返回:{"desc":"成功","outTradeNo":"5d3a95df90ab5","code":"0000","agreementStatus":"WPAR","payTool":"COLL","tradeSubject":"协议描述","inMerchantNo":"110358850003","inCustomerNo":"360080004002741166","agreementNo":"2019072620423649707"}
+[2019-07-26 13:55:44]:发送绑卡验证码成功:
+[2019-07-26 13:55:51]:发送绑卡验证码返回:{"desc":"银行简码不正确","outTradeNo":"5d3a95e6d1284","code":"00069","agreementStatus":"FAIL","payTool":"COLL","tradeSubject":"协议描述","inMerchantNo":"110358850003","inCustomerNo":"360080004002741166","agreementNo":"2019072620993393910"}
+[2019-07-26 13:55:51]:发送绑卡验证码失败:银行简码不正确
+[2019-07-26 13:57:20]:发送绑卡验证码返回:{"desc":"不支持签约的银行编码","outTradeNo":"5d3a964077cac","code":"00086","payTool":"COLL","tradeSubject":"协议描述","inMerchantNo":"110358850003","inCustomerNo":"360080004002741166"}
+[2019-07-26 13:57:20]:发送绑卡验证码失败:不支持签约的银行编码

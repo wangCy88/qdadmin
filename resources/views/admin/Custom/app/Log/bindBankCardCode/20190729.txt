@@ -1,0 +1,2 @@
+[2019-07-29 11:45:33]:request:{"user_id":"1","name":"23111","id_number":"3413412121241242","bank_card":"132312313123","phone":"13552204244","bankName":"\u4ea4\u901a\u94f6\u884c","bankAbribge":"BOCO","\/bindBankCardCode":null}
+[2019-07-29 11:45:34]:返回错误:持卡人卡号不正确

@@ -344,10 +344,14 @@ class CustomController extends Controller
      */
     public function customList(Request $request)
     {
-        $list = GrabCustom::where('is_high', 0)
-            ->select('id', 'name', 'phone', 'created_at', 'province', 'city', 'status', 'rob_at')
+        $list = GrabCustom::where('is_high', 0);
+            if($request -> city){
+                $list = $list -> where('city' , $request -> city);
+            }
+
+            $list = $list->select('id', 'name', 'phone', 'created_at', 'province', 'city', 'status', 'rob_at')
             ->orderBy('id', 'DESC')
-            ->paginate(5);
+            ->paginate(15);
         if ($list) {
             //dd($list -> toArray());
             $list = $list->toArray();
@@ -394,6 +398,9 @@ class CustomController extends Controller
         }
         if ($request->credit) {
             $list = $list->where('credit', $request->credit);
+        }
+        if($request -> city){
+            $list = $list -> where('city' , $request -> city);
         }
         $list = $list->select('id', 'name', 'phone', 'created_at', 'province', 'city', 'status', 'age', 'sex', 'rob_at', 'withdraw_amount')
             ->orderBy('id', 'DESC')
@@ -485,9 +492,9 @@ class CustomController extends Controller
             return response()->json(['code' => 2, 'msg' => '此人是您的客户']);
         }
         $user = GrabUsers::where('user_id', $request->user_id)->first();
-        if ($user->city != $custom->city) {
+        /*if ($user->city != $custom->city) {
             return response()->json(['code' => 3, 'msg' => '超出管辖范围']);
-        }
+        }*/
 
         $user = $request->user_id;
         //dd($user);

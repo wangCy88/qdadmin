@@ -301,7 +301,7 @@ class CustomController extends Controller
         if (!$info) {
             return response()->json(['code' => 1, 'msg' => '订单不存在']);
         }
-        //dd($info -> toArray());
+        dd($info -> toArray());
         if ($request->status == 2) {
             //同意退单
             try {

@@ -586,12 +586,13 @@ class CustomController extends Controller
     {
         $type = $request->is_high ? $request->is_high : 0;
         $list = GrabBorrowOrder::with(['grabCustom' => function ($q) {
-            $q->select();
+            $q ->select();
         }])
             ->with(['GrabCustomHigh' => function ($q2) {
                 $q2->select();
             }])
             ->where('is_high', $type)
+            -> where('status' , 0)
             ->where('user_id', $request->user_id)
             ->get();
         //dd($list -> toArray());

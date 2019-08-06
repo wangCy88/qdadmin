@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//测试
+Route::any('test' , 'TestController@test');
+
 //前端用
 
 Route::any('createImgCode', 'ClientController@createImgCode');//图片验证码

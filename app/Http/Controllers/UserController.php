@@ -273,7 +273,7 @@ class UserController extends Controller
         if ($status != 1) {
             return response()->json(['code' => 1, 'msg' => '请认证后再来充值']);
         }
-        if (!$request->cardTicketId || !$request->payType) {
+        if (!$request->cardTicketId || !$request->payType || !$request -> order) {
             return response()->json(['code' => 2, 'msg' => '参数错误！']);
         }
         $cardTicket = GrabCardTicket::select('face_value', 'price', 'rebate', 'original_price', 'id')
@@ -283,18 +283,19 @@ class UserController extends Controller
         if (!$cardTicket) {
             return response()->json(['code' => 3, 'msg' => '商品下架或不存在！']);
         }
-        $order = 'order_' . date('YmdHis') . getRandomStr(8, false);
+        //$order = 'order_' . date('YmdHis') . getRandomStr(8, false);
         if ($request->payType == 1) {
             //银行卡支付
             if (!$request->cardId) {
                 return response()->json(['code' => 2, 'msg' => '参数错误！']);
             }
+
             $jd = new JdController();
             $input = [
                 'cardId' => $request->cardId,
                 'user_id' => $request->user_id,
                 'amount' => 0.01,//$cardTicket -> original_price,
-                'order_no' => $order,
+                'order_no' => $request -> order,
                 'described' => '卡券支付',
                 'type' => 1,
                 'product_id' => $cardTicket->id
@@ -313,7 +314,7 @@ class UserController extends Controller
                 'name' => '帮卡支付',
                 'amount' => $cardTicket->original_price,
                 'notify' => 'aliCallBack',
-                'order' => $order,
+                'order' => $request -> order,
                 'product_id' => $cardTicket->id
             ];
             GrabAliPay::insert(
@@ -337,6 +338,16 @@ class UserController extends Controller
     }
 
     /**
+    * 获取唯一订单号
+    * @param Request $request
+     */
+    public function getOrder(Request $request)
+    {
+        $order = 'order_' . date('YmdHis') . getRandomStr(8, false);
+        return response()->json(['code' => 0, 'msg' => 'success' , 'order' => $order]);
+    }
+
+    /**
      * 购买积分
      * @param Request $request
      */
@@ -357,7 +368,7 @@ class UserController extends Controller
         if (!$points) {
             return response()->json(['code' => 3, 'msg' => '商品下架或不存在！']);
         }
-        $order = 'order_' . date('YmdHis') . getRandomStr(8, false);
+
         if ($request->payType == 1) {
             //银行卡支付
             if (!$request->cardId) {
@@ -368,7 +379,7 @@ class UserController extends Controller
                 'cardId' => $request->cardId,
                 'user_id' => $request->user_id,
                 'amount' => $points->original_price,
-                'order_no' => $order,
+                'order_no' => $request -> order,
                 'described' => '积分支付',
                 'type' => 2,
                 'product_id' => $points->id
@@ -387,7 +398,7 @@ class UserController extends Controller
                 'name' => '帮分支付',
                 'amount' => $points->original_price,
                 'notify' => 'aliCallBack',
-                'order' => $order
+                'order' => $request -> order
             ];
             GrabAliPay::insert(
                 [
@@ -405,6 +416,29 @@ class UserController extends Controller
                 ]
             );
             $ali->aliPay($input);
+        }
+    }
+
+
+    public function getOrderResult(Request $request)
+    {
+        $status = GrabAliPay::where('order_no' , $request -> order_no) -> where('user_id' , $request -> user_id) -> value('status');
+        //dd($status);
+        if(!isset($status)){
+            return response()->json(['code' => 3, 'msg' => '订单不存在']);
+        }
+        switch ($status){
+            case 0:
+                return response()->json(['code' => 1, 'msg' => '未支付']);
+                break;
+            case 1:
+                return response()->json(['code' => 200, 'msg' => '支付成功']);
+                break;
+            case 2:
+                return response()->json(['code' => 2, 'msg' => '支付失败']);
+                break;
+            default:
+                return response()->json(['code' => 3, 'msg' => '订单不存在']);
         }
     }
 

@@ -14,4 +14,9 @@ class GrabCustom extends Model
     {
         return $this->hasOne('App\GrabCustomHigh', 'custom_id', 'id');
     }
+
+    public function grabCustomForm()
+    {
+        return $this->hasOne('App\GrabCustomForm' , 'id' , 'from');
+    }
 }

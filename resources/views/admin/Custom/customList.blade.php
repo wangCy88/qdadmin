@@ -120,7 +120,7 @@
                             <tr class="str">
                                 <td class="std">{{$k+1}}</td>
                                 <td class="std">{{$v->phone}}</td>
-                                <td class="">{{$channelList[$v -> channel]}}</td>
+<td class="std">{{$channelList[$v -> channel]}}</td>
                                 <td class="std">{{$v->created_at}}</td>
                                 <td class="std">{{$isHigh[$v -> is_high]}}</td>
                                 <td class="std">{{$isRob[$v -> status]}}</td>
@@ -130,9 +130,9 @@
                                 <td class="std">
                                     <a href="javascript:;" onclick="getUsers({{$v->id}})">查看</a>&nbsp;&nbsp;
                                     <a href="javascript:;" onclick="userAssign({{$v->id}})">派单</a>&nbsp;&nbsp;
-                                {{--<a href="javascript:;" onclick="modifyBaseUserPwd({{$v->id}})">拒绝</a>&nbsp;&nbsp;--}}
-                                {{--<a href="javascript:;" onclick="deleteBaseUser({{$v->id}})">删除</a></td>--}}
-                            </tr>
+{{--<a href="javascript:;" onclick="modifyBaseUserPwd({{$v->id}})">拒绝</a>&nbsp;&nbsp;
+<a href="javascript:;" onclick="deleteBaseUser({{$v->id}})">删除</a></td>--}}
+</tr>
                         @endforeach
                     </table>
                 </div>

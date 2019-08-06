@@ -52,10 +52,8 @@
                                 <td class="std">{{$v->created_at}}</td>
                                 <td class="std">{{$v->updated_at}}</td>
                                 <td class="std">
-                                    <a href="javascript:;" onclick="updateStatus({{$v->id}})">开启/关闭</a>&nbsp;&nbsp;
-                                    <a href="javascript:;" onclick="updateCradTicket({{$v->id}})">编辑</a>&nbsp;&nbsp;
-                                {{--<a href="javascript:;" onclick="modifyBaseUserPwd({{$v->id}})">拒绝</a>&nbsp;&nbsp;--}}
-                                {{--<a href="javascript:;" onclick="deleteBaseUser({{$v->id}})">删除</a></td>--}}
+<a href="javascript:;" onclick="updateStatus({{$v->id}})">开启/关闭</a>
+<a href="javascript:;" onclick="updateCradTicket({{$v->id}})">编辑</a>
                             </tr>
                         @endforeach
                     </table>

@@ -416,7 +416,12 @@ class CustomController extends Controller
      */
     public function customFormSee(Request $request)
     {
-        $data = GrabCustomFormClick::orderBy('id', 'DESC')->paginate(2);
-        return view('admin.Custom.customFormSee', compact('data'));
+        $data = GrabCustomFormClick::with(['grabCustomFrom' => function($q) {
+            $q -> select('id' , 'name');
+        }])
+            -> orderBy('id', 'DESC')->paginate(15);
+        //dd($data -> toArray());
+        $formStatus = config('config.formStatus');
+        return view('admin.Custom.customFormSee', compact('data' , 'formStatus'));
     }
 }

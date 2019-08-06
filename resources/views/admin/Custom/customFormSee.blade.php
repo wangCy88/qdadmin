@@ -37,12 +37,12 @@
                         @foreach($data as $k => $v)
                             <tr class="str">
                                 <td class="std">{{$k+1}}</td>
-                                <td class="std">{{$v->channel_id}}</td>
+<td class="std">@if($v -> grabCustomFrom) {{$v -> grabCustomFrom->name}} @endif</td>
                                 <td class="std">{{$v -> date}}</td>
                                 <td class="std">{{$v -> click}}</td>
                                 <td class="std">{{$v -> valid_click}}</td>
                                 <td class="std">{{$v -> register}}</td>
-                                <td class="std">{{$v -> status}}</td>
+<td class="std">{{$formStatus[$v -> status]}}</td>
                                 <td class="std">{{$v->created_at}}</td>
                                 <td class="std">{{$v -> updated_at}}</td>
                             </tr>

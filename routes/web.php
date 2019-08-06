@@ -28,6 +28,7 @@ Route::any('retrievePassword', 'ClientController@retrievePassword');//找回密�
 Route::any('clientSendMsg', 'ClientController@clientSendMsg'); //发送短信验证码
 Route::any('createImgCode', 'ClientController@createImgCode'); //图片验证码
 Route::any('ClientIndex', 'ClientController@ClientIndex'); //首页图片
+Route::any('userRepeatRegister' , 'ClientController@userRepeatRegister'); //判断用户重复注册
 
 
 //用户模块
@@ -47,12 +48,15 @@ Route::any('aliCallBack', 'AliController@aliCallBack'); //支付宝支付回调
 Route::any('userOpen', 'UserController@userOpen'); // 开启/关闭 自动抢单
 Route::any('inviteUrl', 'UserController@inviteUrl');
 Route::any('consumeDetail', 'UserController@consumeDetail'); //流水
+Route::any('getOrder' , 'UserController@getOrder'); //获取支付订单号
+Route::any('getOrderResult' , 'UserController@getOrderResult'); // 获取支付结果
+
 //意见反馈
 Route::any('feedbackType', 'MsgController@feedbackType'); //意见反馈类型
 Route::any('submitFeedback', 'MsgController@submitFeedback');//提交意见反馈
 Route::any('getFeedback', 'MsgController@getFeedback');//获取意见反馈
 Route::any('getFeedbackDetail', 'MsgController@getFeedbackDetail');//获取意见反馈详情
-Route::any('msgList', 'MsgController@msgList'); //消息聊表
+Route::any('msgList', 'MsgController@msgList'); //消息列表
 Route::any('isRead', 'MsgController@isRead'); //是否存在未读消息
 
 //客户模块
@@ -68,7 +72,7 @@ Route::any('robOrder', 'CustomController@robOrder'); // 抢单
 Route::any('userOrder', 'CustomController@userOrder'); // 我的订单
 Route::any('exitOrderAccount', 'CustomController@exitOrderAccount'); //退单理由
 Route::any('exitOrder', 'CustomController@exitOrder'); //退单
-
+Route::any('customRepeatRegister' , 'ClientController@customRepeatRegister'); //客户重复注册
 //H5推广
 Route::any('customRegister', 'ClientController@customRegister'); // 客户申请H5注册
 Route::post('perfectData', 'ClientController@perfectData'); // 客户完善资料
@@ -123,7 +127,7 @@ Route::group(['middleware' => ['login']], function () {
     Route::any('customOrder', 'admin\CustomController@customOrder'); //订单管理
     Route::any('exitCustomOrder', 'admin\CustomController@exitCustomOrder'); //处理退单
     Route::any('customFormList', 'admin\CustomController@customFormList'); //客户渠道列表
-    Route::any('customFormAdd', 'admin\CustomController@customFmAdd'); //添加客户渠道
+    Route::any('customFormAdd', 'admin\CustomController@customFormAdd'); //添加客户渠道
     Route::any('customFormEdit', 'admin\CustomController@customFormEdit'); //编辑客户渠道
     Route::any('customFormStatus', 'admin\CustomController@customFormStatus'); //开启/关闭
     Route::any('customFormSee', 'admin\CustomController@customFormSee'); //客户渠道监控

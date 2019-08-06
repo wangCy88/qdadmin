@@ -80,7 +80,6 @@ class MsgController extends Controller
     //存储意见
     private static function saveFeedback($request)
     {
-        $name = '';
         $insertData = [
             'user_id' => $request->user_id,
             'type' => $request->type,
@@ -156,7 +155,7 @@ class MsgController extends Controller
      */
     public function msgList(Request $request)
     {
-        $list = GrabSendmsg::where('user_id', $request->user_id)->orderBy('id', 'DESC')->get();
+        $list = GrabSendmsg::where('user_id', $request->user_id) -> orwhere('user_id' , 0)->orderBy('id', 'DESC')->get();
         //GrabSendmsg::where('user_id' , $request -> user_id) -> update(['status' => 1]);
         return response()->json(['code' => 0, 'data' => $list, 'msg' => 'success']);
     }
@@ -170,6 +169,11 @@ class MsgController extends Controller
     {
         GrabSendmsg::where('user_id', $request->user_id)->update(['status' => 1]);
         return response()->json(['code' => 0, 'msg' => 'success']);
+    }
+
+    public function sendMsgToUsers(Request $request)
+    {
+
     }
 
 }

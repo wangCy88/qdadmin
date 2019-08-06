@@ -30,6 +30,8 @@ class CustomController extends Controller
         }
     }
 
+
+
     /**
      * 新增够你花用户
      * @param Request $request
@@ -408,8 +410,9 @@ class CustomController extends Controller
                 $list['data'][$k]['time'] = $time;
                 $isRob = 0;
                 if ($v['rob_at']) {
-                    $time2 = (time() - strtotime($v['rob_at'])) / 60 * 60 * 24;
-                    if ($time2 < 7) {
+                    $time2 = time() - strtotime($v['rob_at']);
+                    //dd($time2);
+                    if ($time2 < 7*24*60*60) {
                         $isRob = 1;
                     }
                 }
@@ -437,7 +440,7 @@ class CustomController extends Controller
         }
         $res = GrabBorrowOrder::where(['user_id' => $request->user_id, 'custom_id' => $request->custom_id])->first();
         if (!$res) {
-            return response()->json(['code' => 1, 'msg' => '权限不足']);
+            //return response()->json(['code' => 1, 'msg' => '权限不足']);
         }
         $info = GrabCustom::with(['grabCustomHigh' => function ($q) {
             $q->select();
@@ -447,6 +450,18 @@ class CustomController extends Controller
         if (!$info) {
             return response()->json(['code' => 2, 'msg' => '客户不存在']);
         }
+        if(!$res){
+            $info['phone'] = yc_phone($info -> phone);
+        }
+        //$info -> grabCustomHigh;
+        //dd($info -> toArray());
+        $info['social'] = $info -> social ? '有' : '无';
+        $info['grabCustomHigh']['social'] = $info -> grabCustomHigh -> social ? '有' : '无';
+        $info['grabCustomHigh']['housing_fund'] = $info -> grabCustomHigh -> housing_fund ? '有' : '无';
+        $wages = config('config.wages');
+        $info['grabCustomHigh']['wages'] = $wages[$info -> grabCustomHigh -> wages];
+        $info['grabCustomHigh']['human_life'] = $info -> grabCustomHigh -> human_life ? '有' : '无';
+        $info['grabCustomHigh']['webank'] = $info -> grabCustomHigh -> webank ? '有' : '无';
         return response()->json(['code' => 0, 'msg' => 'success', 'data' => $info]);
     }
 

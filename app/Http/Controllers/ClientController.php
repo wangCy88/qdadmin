@@ -96,6 +96,16 @@ class ClientController extends Controller
         return response()->json(['code' => 0, 'msg' => 'register success']);
     }
 
+    public function userRepeatRegister(Request $request)
+    {
+        $res = GrabUsersPre::where(['phone' => $request -> phone , 'mchid' => $request -> mchid]) -> first();
+        if($res){
+            return response()->json(['code' => 1, 'msg' => '重复注册']);
+        }else{
+            return response() -> json(['code' => 0 , 'msg' => '允许注册']);
+        }
+    }
+
     /**
      * 发送短信验证码
      * @param Request $request
@@ -273,7 +283,7 @@ class ClientController extends Controller
         }
         if (!empty($request->parentCode)) {
             $pid = GrabUsersPre::where('rand_str', $request->parentCode)->value('id');
-            $channel = GrabUsersPre::where('rand_str', $request->parentCode)->value('channel');
+            //$channel = GrabUsersPre::where('rand_str', $request->parentCode)->value('channel');
         }
         $mchid = 1;
         $cond = ['phone' => $request->phone];
@@ -696,9 +706,16 @@ class ClientController extends Controller
         \Log::LogWirte('request:' . json_encode($request->input()), 'customRegister');
         $code = $request->msCode;
         $phone = $request->phone;
+        if(!$code || !$phone){
+            return response()->json(['code' => 1 , 'msg' => '参数错误' , 'data' => $request -> input()]);
+        }
         /*if(!self::msCodeVerify($code , $phone)){
             //return response()->json(['code' => 1 , 'msg' => '短信验证码错误' ]);
         }*/
+        $from = 0;
+        if($request -> channelCode){
+            $from = GrabCustomFrom::where('code' , $request -> channelCode) -> value('id');
+        }
         $res = GrabCustom::where('phone', $phone)->first();
         if ($res) {
             return response()->json(['code' => 0, 'msg' => '更新资料']);
@@ -709,7 +726,8 @@ class ClientController extends Controller
                 'channel' => 3,
                 'province' => $request->province,
                 'city' => $request->city,
-                'area' => $request->area ? $request->area : ''
+                'area' => $request->area ? $request->area : '',
+                'from' => $from
             ]
         );
         return response()->json(['code' => 0, 'msg' => '申请成功']);
@@ -762,7 +780,8 @@ class ClientController extends Controller
                 'credit' => $request->credit,
                 'house' => $request->house,
                 'car' => $request->car,
-                'job' => $request->job
+                'job' => $request->job,
+                'year' => $request -> year
             ]
         );
         return response()->json(['code' => 0, 'msg' => '申请成功']);
@@ -894,10 +913,11 @@ class ClientController extends Controller
      */
     public function customFormTotal(Request $request)
     {
-        $request = $request->input();
-        unset($request['/userFormTotal']);
+        $request = $request -> except('/customFormTotal');
+        //$request = $request->input();
+        //unset($request['/userFormTotal']);
         //dd($request);
-        \Log::LogWirte('request:' . json_encode($request), 'userFormTotal');
+        \Log::LogWirte('request:' . json_encode($request), 'customFormTotal');
         if (
             !isset($request['client_ip'])
             || !isset($request['channelCode'])
@@ -1004,5 +1024,20 @@ class ClientController extends Controller
             }
         }
         exit(json_encode(['code' => 200, 'msg' => 'success']));
+    }
+
+    public function customRepeatRegister(Request $request)
+    {
+        $info = GrabCustom::where(['phone' => $request -> phone]) -> first();
+        if(!$info){
+            return response() -> json(['code' => 0 , 'msg' => '允许注册']);
+        }
+        $time = (time() - strtotime($info -> created_at)) / 86400;
+        if($time > 7){
+            return response() -> json(['code' => 0 , 'msg' => '允许注册']);
+        }else{
+            //echo $time;
+            return response() -> json(['code' => 1 , 'msg' => '重复注册']);
+        }
     }
 }

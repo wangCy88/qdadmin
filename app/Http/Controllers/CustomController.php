@@ -553,8 +553,8 @@ class CustomController extends Controller
             //发送短信/消息
             /*\SendMsg::sendmail($custom -> phone , '您的申请已经被处理,请注意接听来电'); // 发送给客户
             \SendMsg::sendmail($user -> phone , '您已抢到客户，请前往APP查看');*/
-            \SendMsg::sendmail($v->phone, '【帮带客】您的申请已通过，请注意接听客服电话。'); // 发送给客户
-            \SendMsg::sendmail($grabUser[0]['phone'], '【帮带客】您已成功抢单，请登陆APP查看。'); //发送给信贷经理
+            \SendMsg::sendmail($custom -> phone, '【帮带客】您的申请已通过，请注意接听客服电话。'); // 发送给客户
+            \SendMsg::sendmail($user -> phone, '【帮带客】您已成功抢单，请登陆APP查看。'); //发送给信贷经理
             $res6 = GrabSendmsg::insert(
                 [
                     'user_id' => $user,

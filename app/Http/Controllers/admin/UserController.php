@@ -26,7 +26,7 @@ class UserController extends Controller
             ->select('id', 'phone', 'updated_at', 'auth_status')
             ->orderBy('id', 'desc')
             //-> toSql();
-            ->paginate(2);
+            ->paginate(15);
         $authStatusList = config('config.authStatusList');
         //dd($data -> toArray());
         return view('admin.User.userList', compact('data', 'authStatusList'));

@@ -229,7 +229,7 @@ class CustomController extends Controller
 
             //发送短信/消息
             $phone = GrabCustom::where('id', $request->id)->value('phone');
-            \SendMsg::sendmail($v->phone, '【帮带客】您的申请已通过，请注意接听客服电话。'); // 发送给客户
+            \SendMsg::sendmail($phone, '【帮带客】您的申请已通过，请注意接听客服电话。'); // 发送给客户
             \SendMsg::sendmail($grabUser[0]['phone'], '【帮带客】您已成功抢单，请登陆APP查看。'); //发送给信贷经理
             $res6 = GrabSendmsg::insert(
                 [
@@ -252,6 +252,9 @@ class CustomController extends Controller
     }
 
 
+    /**
+     * 订单
+     */
     public function customOrder(Request $request)
     {
         $status = $request->status;

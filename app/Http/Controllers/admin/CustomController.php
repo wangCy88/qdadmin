@@ -301,7 +301,7 @@ class CustomController extends Controller
         if (!$info) {
             return response()->json(['code' => 1, 'msg' => '订单不存在']);
         }
-        dd($info -> toArray());
+        //dd($info -> toArray());
         if ($request->status == 2) {
             //同意退单
             try {
@@ -309,9 +309,10 @@ class CustomController extends Controller
                 //更该订单状态
                 GrabBorrowOrder::where('id', $request->id)->update(['status' => 2]);
                 //卡券归还
-                GrabUsersWallet::where('user_id', $info->grabUsers->user_id)->increment('card_ticket', $info->price);
+                GrabUsersWallet::where('user_id', $info -> user_id)->increment('card_ticket', $info->price);
                 //添加流水
                 $cardTicket = GrabUsersWallet::where('user_id', $info->user_id)->value('card_ticket');
+                //dd($info -> user_id);
                 GrabUserCardticketDetail::insert(
                     [
                         'user_id' => $info->user_id,

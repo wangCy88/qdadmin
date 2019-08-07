@@ -23,8 +23,9 @@ class CustomController extends Controller
         $where = [];
         //dd($request -> input());
         $is_high = $request->is_high ? $request->is_high : '';
-        $date1 = $request->date1 ? $request->date1 : '';
-        $date2 = $request->date2 ? $request->date2 : '';
+        //dd($is_high);
+        $date1 = $request->date1 ? $request->date1 : date('Y-m-d');
+        $date2 = $request->date2 ? $request->date2 : date('Y-m-d', strtotime(' + 1 day'));
         $channel = $request->channel ? $request->channel : '';
         $is_rob = $request->is_rob ? $request->is_rob : '';
         $phone = $request->phone ? $request->phone : '';
@@ -151,8 +152,7 @@ class CustomController extends Controller
         $grabUser = GrabUsers::/*with(['grabUsersWallet' => function($q){
                     $q -> where('card_ticket' , '>' , 0) -> select();
                 }])
-                    -> */
-        where('city', $city)
+                    -> */where('city', $city)
             ->where('is_open', 1)
             ->orderBy('user_id', 'DESC')
             ->get()
@@ -262,23 +262,22 @@ class CustomController extends Controller
         $date2 = $request->date2;
 
         $data = GrabBorrowOrder::with(['grabUsers' => function ($q) {
-            $q->select();
+            $q->select('id' , 'name' , 'user_id' , 'phone');
         }])
             ->with(['grabCustom' => function ($q2) {
-                $q2->select();
-            }])
-            ->with(['grabOrderAccount' => function ($q3) {
-                $q3->select();
+                $q2->select('id' , 'name' , 'phone');
             }]);
+            /* ->with(['grabOrderAccount' => function ($q3) {
+                $q3->select();
+            }]); */
         if ($status) {
             $data = $data->where('status', $request->status);
         }
         if ($date1 && $date2) {
             $data = $data->whereBetween('created_at', [$date1, $date2]);
         }
-        $data = $data->orderBy('id', 'DESC')
-            ->paginate(10);
-        //dd($data -> toArray());
+        $data = $data->orderBy('id', 'DESC')->paginate(10);
+        //dd($data->toArray());
         $borrowStatus = config('config.borrowStatus');
         return view('admin.User.customOrder', compact('data', 'borrowStatus', 'status', 'date1', 'date2'));
     }
@@ -309,7 +308,7 @@ class CustomController extends Controller
                 //更该订单状态
                 GrabBorrowOrder::where('id', $request->id)->update(['status' => 2]);
                 //卡券归还
-                GrabUsersWallet::where('user_id', $info -> user_id)->increment('card_ticket', $info->price);
+                GrabUsersWallet::where('user_id', $info->user_id)->increment('card_ticket', $info->price);
                 //添加流水
                 $cardTicket = GrabUsersWallet::where('user_id', $info->user_id)->value('card_ticket');
                 //dd($info -> user_id);
@@ -420,12 +419,12 @@ class CustomController extends Controller
      */
     public function customFormSee(Request $request)
     {
-        $data = GrabCustomFormClick::with(['grabCustomFrom' => function($q) {
-            $q -> select('id' , 'name');
+        $data = GrabCustomFormClick::with(['grabCustomFrom' => function ($q) {
+            $q->select('id', 'name');
         }])
-            -> orderBy('id', 'DESC')->paginate(15);
+            ->orderBy('id', 'DESC')->paginate(15);
         //dd($data -> toArray());
         $formStatus = config('config.formStatus');
-        return view('admin.Custom.customFormSee', compact('data' , 'formStatus'));
+        return view('admin.Custom.customFormSee', compact('data', 'formStatus'));
     }
 }

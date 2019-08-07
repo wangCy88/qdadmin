@@ -21,11 +21,11 @@ class GrabBorrowOrder extends Model
 
     public function grabUsers()
     {
-        return $this->hasOne('App\GrabUsers', 'id', 'user_id');
+        return $this->hasOne('App\GrabUsers', 'user_id', 'user_id');
     }
 
     public function grabOrderAccount()
     {
-        return $this->hasOne('App\GrabOrderAccount', 'id', 'account');
+        return $this->hasOne('App\GrabOrderAccount', 'account', 'id');
     }
 }

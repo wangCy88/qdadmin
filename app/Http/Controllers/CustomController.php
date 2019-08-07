@@ -74,7 +74,7 @@ class CustomController extends Controller
                         'phone' => $v->phone,
                         'channel' => 1,
                         'created_at' => date('Y-m-d H:i:s'),
-                        'is_high' => 1,
+                        'is_high' => 2,
                         'channel_id' => $info->id,
                         'sex' => \idNumber::get_sex($info->id_number),
                         'age' => \idNumber::get_age($info->id_number),
@@ -97,7 +97,7 @@ class CustomController extends Controller
                         'province' => $v->province,
                         'city' => $v->city,
                         'area' => $v->area,
-                        'is_high' => 0,
+                        'is_high' => 1,
                         'channel_id' => null,
                         'sex' => null,
                         'age' => null,
@@ -345,7 +345,7 @@ class CustomController extends Controller
     public function customList(Request $request)
     {
         $limit = isset($request -> limit) ? $request -> limit : 15;
-        $list = GrabCustom::where('is_high', 0);
+        $list = GrabCustom::where('is_high', 1);
             if($request -> city){
                 $list = $list -> where('city' , $request -> city);
             }
@@ -388,7 +388,7 @@ class CustomController extends Controller
         $list = GrabCustom::with(['grabCustomHigh' => function ($q) {
             $q->select();
         }])
-            ->where('is_high', 1);
+            ->where('is_high', 2);
         if ($request->city) {
             $list = $list->where('city', $request->city);
         }

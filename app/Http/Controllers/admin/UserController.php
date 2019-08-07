@@ -20,16 +20,23 @@ class UserController extends Controller
      */
     public function userList(Request $request)
     {
+        $date1 = $request->date1 ? $request->date1 : date('Y-m-d');
+        $date2 = $request->date2 ? $request->date2 : date('Y-m-d', strtotime(' + 1 day'));
+        $phone = $request->phone ? $request->phone : '';
         $data = GrabUsersPre::with(['grabUsersWallet' => function ($q) {
             $q->select();
         }])
             ->select('id', 'phone', 'updated_at', 'auth_status')
             ->orderBy('id', 'desc')
             //-> toSql();
-            ->paginate(15);
+            ->whereBetween('created_at' , [$date1 , $date2]);
+            if($phone){
+                $data = $data -> where('phone' , 'LIKE' , '%' . $phone . '%');
+            }
+            $data = $data->paginate(15);
         $authStatusList = config('config.authStatusList');
         //dd($data -> toArray());
-        return view('admin.User.userList', compact('data', 'authStatusList'));
+        return view('admin.User.userList', compact('data', 'authStatusList' , 'phone' , 'date1' , 'date2'));
     }
 
     /**

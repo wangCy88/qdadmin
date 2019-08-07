@@ -344,6 +344,7 @@ class CustomController extends Controller
      */
     public function customList(Request $request)
     {
+        $limit = isset($request -> limit) ? $request -> limit : 15;
         $list = GrabCustom::where('is_high', 0);
             if($request -> city){
                 $list = $list -> where('city' , $request -> city);
@@ -351,7 +352,7 @@ class CustomController extends Controller
 
             $list = $list->select('id', 'name', 'phone', 'created_at', 'province', 'city', 'status', 'rob_at')
             ->orderBy('id', 'DESC')
-            ->paginate(15);
+            ->paginate($limit);
         if ($list) {
             //dd($list -> toArray());
             $list = $list->toArray();
@@ -383,6 +384,7 @@ class CustomController extends Controller
     //优质单
     public function highCustomList(Request $request)
     {
+        $limit = isset($request -> limit) ? $request -> limit : 15;
         $list = GrabCustom::with(['grabCustomHigh' => function ($q) {
             $q->select();
         }])
@@ -404,7 +406,7 @@ class CustomController extends Controller
         }
         $list = $list->select('id', 'name', 'phone', 'created_at', 'province', 'city', 'status', 'age', 'sex', 'rob_at', 'withdraw_amount')
             ->orderBy('id', 'DESC')
-            ->paginate(5);
+            ->paginate($limit);
         if ($list) {
             //dd($list -> toArray());
             $list = $list->toArray();

@@ -187,8 +187,12 @@ class UserController extends Controller
     public function userFormSee(Request $request)
     {
         //$id = session('user_info') -> id;
-        $data = GrabUserFormClick::orderBy('id', 'DESC')->paginate(15);
-        return view('admin.User.userFormSee', compact('data'));
+        $data = GrabUserFormClick::with(['grabUserFrom' => function($q){
+            $q -> select('id' , 'name');
+        }]) -> orderBy('id', 'DESC')->paginate(15);
+        //dd($data -> toArray());
+        $formStatus = config('config.formStatus');
+        return view('admin.User.userFormSee', compact('data' , 'formStatus'));
     }
 
 

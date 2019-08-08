@@ -36,7 +36,7 @@
                         @foreach($data as $k => $v)
                             <tr class="str">
                                 <td class="std">{{$k+1}}</td>
-                                <td class="std">{{$v -> grabUsersPre->phone}}</td>
+                                <td class="std">@if($v -> grabUsersPre){{$v -> grabUsersPre->phone}}@endif</td>
                                 <td class="std">{{$v -> grabFeedbackType -> type_name}}</td>
                                 <td class="std">{{$v -> remark}}</td>
                                 <td class="std">{{$v -> answer}}</td>

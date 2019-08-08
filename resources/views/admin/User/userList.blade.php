@@ -20,92 +20,40 @@
     <div id="hd"></div>
     <div id="bd">
         <div id="main">
-            {{--<form action="{{url('addBaseUser')}}" method="post">
+            <form action="{{url('adminUserList')}}" method="post">
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="search-box ue-clear">
-                    <div class="search-area">
-                        <div class="kv-item ue-clear">
-                            <label>姓名:</label>
-                            <div class="kv-item-content">
-                                <input type="text" style="width: 100px;height: 28px;" name="name" value=""/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="search-area">
-                        <div class="kv-item ue-clear">
-                            <label>账号:</label>
-                            <div class="kv-item-content">
-                                <input type="text" style="width: 100px;height: 28px;" name="account" value=""/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="search-area">
-                        <div class="kv-item ue-clear">
-                            <label>密码:</label>
-                            <div class="kv-item-content">
-                                <input type="text" style="width: 100px;height: 28px;" name="password" value=""/>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="search-area">
                         <div class="kv-item ue-clear">
                             <label>手机号:</label>
                             <div class="kv-item-content">
-                                <input type="text" style="width: 100px;height: 28px;" name="phone" value=""/>
+                                <input type="text" style="width: 100px;height: 28px;" name="phone" value="{{$phone}}"/>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="search-box ue-clear">
+
                     <div class="search-area">
-                        <div class="kv-item ue-clear">
-                            <label>性别:</label>
-                            <div class="kv-item-content">
-                                <select style="width: 120px;" name="sex">
-                                    <option value="">请选择</option>
-                                    @foreach($sexList as $k => $v)
-                                        <option value="{{$k}}">{{$v}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="kv-item ue-clear">
+                                <label>时间:</label>
+                                <div class="kv-item-content">
+                                    <input type="date" style="width: 150px;height: 25px;" name="date1" value="{{$date1}}" />
+                                    <span>~</span>
+                                    <input type="date" style="width: 150px;height: 25px;" name="date2" value="{{$date2}}" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="search-area">
-                        <div class="kv-item ue-clear">
-                            <label>在职状态:</label>
-                            <div class="kv-item-content">
-                                <select style="width: 120px;" name="status">
-                                    <option value="">请选择</option>
-                                    @foreach($jobStatusList as $k => $v)
-                                        <option value="{{$k}}">{{$v}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="search-area">
-                        <div class="kv-item ue-clear">
-                            <label>角色:</label>
-                            <div class="kv-item-content">
-                                <select style="width: 120px;" name="gid">
-                                    <option value="">请选择</option>
-                                    @foreach($groups as $v)
-                                        <option value="{{$v->id}}">{{$v->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+            
                     <div class="search-button" style="margin-left: 20px;">
-                        <input class="button" type="submit" value="新增用户" />
+                        <input class="button" type="submit" value="查找" />
                     </div>
                 </div>
-            </form>--}}
+            </form>
             <div class="table">
                 <div class="grid">
                     <table class="stable">
                         <tr class="str">
-                            <th class="sth">编号</th>
+                            <th class="sth">ID</th>
                             <th class="sth">手机号</th>
                             <th class="sth">状态</th>
                             <th class="sth">最后登陆时间</th>
@@ -115,7 +63,7 @@
                         </tr>
                         @foreach($data as $k => $v)
                             <tr class="str">
-                                <td class="std">{{$k+1}}</td>
+                                <td class="std">{{$v->id}}</td>
                                 <td class="std">{{$v->phone}}</td>
                                 <td class="">{{$authStatusList[$v -> auth_status]}}</td>
                                 <td class="std">{{$v->updated_at}}</td>

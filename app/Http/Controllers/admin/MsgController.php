@@ -18,17 +18,17 @@ class MsgController extends Controller
      */
     public function msgList(Request $request)
     {
-        $data = GrabFeedback::with(['grabFeedbackType' => function ($query) {
-            $query->select('id', 'type_name');
-        }])
-            ->with(['grabUsersPre' => function ($q2) {
-                $q2->select('id', 'phone');
+        $data = GrabFeedback::with(['grabFeedbackType' => function($query){
+            $query -> select('id' , 'type_name');
             }])
-            ->orderBy('id', 'DESC')
-            ->paginate(10);
+            -> with(['grabUsersPre' => function($q2){
+                $q2 -> select('id' , 'phone');
+            }])
+            -> orderBy('id' , 'DESC')
+            -> paginate(10);
         //dd($data -> toArray());
         $msgStatus = config('config.msgStatus');
-        return view('admin.Msg.msgList', compact('data', 'msgStatus'));
+        return view('admin.Msg.msgList' , compact('data' , 'msgStatus'));
     }
 
     /**
@@ -38,12 +38,12 @@ class MsgController extends Controller
      */
     public function sendMsgToUser(Request $request)
     {
-        if ($request->isMethod('post')) {
-            GrabFeedback::where('id', $request->id)->update(['answer' => $request->answer, 'status' => 1]);
+        if($request -> isMethod('post')){
+            GrabFeedback::where('id' , $request -> id) -> update(['answer' => $request -> answer , 'status' => 1]);
             return response()->json(['code' => 0, 'msg' => '回复成功']);
-        } else {
-            $info = GrabFeedback::where('id', $request->id)->first();
-            return view('admin.Msg.sendMsgToUser', compact('info'));
+        }else{
+            $info = GrabFeedback::where('id' , $request -> id) -> first();
+            return view('admin.Msg.sendMsgToUser' , compact('info'));
         }
     }
 

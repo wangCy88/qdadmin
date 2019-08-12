@@ -16,39 +16,30 @@
 </head>
 
 <body>
-    < div id="container" class="position">
-        < div id="hd"></ div>
-        < div id="bd">
-            < div id="main">
-                <form action="{{url('sendMsgToUser')}}" method="post" style="width: 100%; float: left" enctype="multipart/form-data">
-                    <input style="display: none" name="id" value="{{$info -> id}}" />
-                    < div class="search-area">
-                        < div class="kv-item ue-clear">
-                            <label>反馈内容:</label>
-                            < div class="kv-item-content">
-                                {{--<input type="text" style="width: 100px;height: 28px;" name="username" value="{{$info -> phone}}"/>--}}
-                                {{$info -> remark}}
-                            </ div>
-                        </ div>
-                    </ div>
-
-
-                    < div class="search-area">
-                        < div class="kv-item ue-clear">
-                            <label>回复</label>
-                            < div class="kv-item-content">
-                                <textarea style="width: 100px;height: 28px;" rows="3" cols="20" name="answer"></textarea>
-                            </ div>
-                        </ div>
-                    </ div>
-                    < div class="search-button" style="margin-left: 20px; margin-top: 30px">
-                        <input class="button" type="button" onclick="add()" value="通过" />
-                    </ div>
-                    {{--</div>--}}
-                </form>
+    <div id="container" class="position">
+        <div id="hd">
             </ div>
-        </ div>
-    </ div>
+            <div id="bd">
+                <div id="main">
+                    <form action="{{url('sendMsgToUsers')}}" method="post" style="width: 100%; float: left" enctype="multipart/form-data">
+
+
+                        <div class="search-area">
+                            <div class="kv-item ue-clear">
+                                <label>发送</label>
+                                <div class="kv-item-content">
+                                    <textarea style="width: 100px;height: 28px;" rows="3" cols="20" name="answer"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="search-button" style="margin-left: 20px; margin-top: 30px">
+                            <input class="button" type="button" onclick="add()" value="通过" />
+                        </div>
+                        {{--</div>--}}
+                    </form>
+                </div>
+            </div>
+        </div>
 </body>
 <script type="text/javascript" src="{{asset('js/jquery.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/global.js')}}"></script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\GrabFeedback;
+use App\GrabSendmsg;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -51,7 +52,7 @@ class MsgController extends Controller
     {
         if($request -> isMethod('post')){
             GrabSendmsg::insertGetId(['content' => $request -> content]);
-            return response()->json(['code' => 0, 'msg' => '回复成功']);
+            return response()->json(['code' => 0, 'msg' => '发送成功']);
         }else{
             return view('admin.Msg.sendMsgToUsers');
         }

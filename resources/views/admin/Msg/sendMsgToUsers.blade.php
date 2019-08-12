@@ -26,14 +26,14 @@
 
                         <div class="search-area">
                             <div class="kv-item ue-clear">
-                                <label>发送</label>
+                                <label>内容</label>
                                 <div class="kv-item-content">
-                                    <textarea style="width: 100px;height: 28px;" rows="3" cols="20" name="answer"></textarea>
+                                    <textarea rows="3" cols="20" name="content"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="search-button" style="margin-left: 20px; margin-top: 30px">
-                            <input class="button" type="button" onclick="add()" value="通过" />
+                            <input class="button" type="button" onclick="add()" value="发送" />
                         </div>
                         {{--</div>--}}
                     </form>
@@ -91,9 +91,10 @@
                 layer.msg(data.msg, {
                     icon: 1
                 }, function() {
-                    var index = parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(index);
-                    window.parent.location.reload();
+                    // var index = parent.layer.getFrameIndex(window.name);
+                    // parent.layer.close(index);
+                    // window.parent.location.reload();
+                    location.href = '/sendMsgToUsers';
                     //刷新父页面
                 });
             } else {

@@ -53,7 +53,7 @@ return [
             'strict' => false,
             'engine' => null,
             //'unix_socket'=> '/tmp/mysql.sock'
-            'unix_socket'=> '/var/lib/mysql/mysql.sock'
+            'unix_socket' => '/var/lib/mysql/mysql.sock'
         ],
 
         'apptest' => [

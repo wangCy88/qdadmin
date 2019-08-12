@@ -47,5 +47,14 @@ class MsgController extends Controller
         }
     }
 
+    public function sendMsgToUsers(Request $request)
+    {
+        if($request -> isMethod('post')){
+            GrabSendmsg::insertGetId(['content' => $request -> content]);
+            return response()->json(['code' => 0, 'msg' => '回复成功']);
+        }else{
+            return view('admin.Msg.sendMsgToUsers');
+        }
+    }
 
 }

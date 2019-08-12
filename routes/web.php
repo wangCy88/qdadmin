@@ -150,6 +150,6 @@ Route::group(['middleware' => ['login']], function () {
     //消息管理
     Route::any('adminMsgList', 'admin\MsgController@msgList'); //反馈列表
     Route::any('sendMsgToUser', 'admin\MsgController@sendMsgToUser'); //回复消息
-
+    Route::any('sendMsgToUsers' , 'admin\MsgController@sendMsgToUsers'); //发送多人消息
 
 });

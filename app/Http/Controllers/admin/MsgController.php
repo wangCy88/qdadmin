@@ -48,6 +48,10 @@ class MsgController extends Controller
         }
     }
 
+    /**
+     * 发送群消息
+     * 
+     */
     public function sendMsgToUsers(Request $request)
     {
         if ($request->isMethod('post')) {

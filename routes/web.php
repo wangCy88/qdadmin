@@ -146,7 +146,8 @@ Route::group(['middleware' => ['login']], function () {
     Route::any('addPoints', 'admin\GoodsController@addPoints'); //添加积分产品
     Route::any('updatePoints', 'admin\GoodsController@updatePoints'); //编辑积分产品
     Route::any('pointsStatus', 'admin\GoodsController@pointsStatus'); // 积分上下架
-
+    Route::any('updateCardPrice' , 'admin\GoodsController@updateCardPrice'); // 编辑卡券价格
+    Route::any('updatePointsPrice' , 'admin\GoodsController@updatePointsPrice'); //
     //消息管理
     Route::any('adminMsgList', 'admin\MsgController@msgList'); //反馈列表
     Route::any('sendMsgToUser', 'admin\MsgController@sendMsgToUser'); //回复消息

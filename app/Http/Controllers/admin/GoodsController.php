@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\GrabCardTicket;
-use App\GrabPoints;
+use App\GrabConfig;use App\GrabPoints;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -20,7 +20,8 @@ class GoodsController extends Controller
     {
         $data = GrabCardTicket::orderBy('id', 'DESC')->paginate(10);
         $cardTicketStatus = config('config.cardTicketStatus');
-        return view('admin.Goods.cardTicketList', compact('data', 'cardTicketStatus'));
+        $price = GrabConfig::where('id' , 1) -> value('cardPrice');
+        return view('admin.Goods.cardTicketList', compact('data', 'cardTicketStatus' , 'price'));
     }
 
     /**
@@ -44,12 +45,55 @@ class GoodsController extends Controller
     public function updateCardTicket(Request $request)
     {
         if ($request->isMethod('post')) {
-            GrabCardTicket::where('id', $request->id)->update($request->input());
+            $data = $request->toArray();
+            unset($data['/updateCardTicket']);
+
+            GrabCardTicket::where('id', $request->id)->update($data);
             return response()->json(['code' => 200, 'msg' => '操作成功']);
         } else {
             $info = GrabCardTicket::where('id', $request->id)->first();
             return view('admin.Goods.updateCardTicket', compact('info'));
         }
+    }
+
+    /**
+    * @param Request $request
+     */
+    public function updateCardPrice(Request $request)
+    {
+        //dd($request -> input());
+        $price = GrabConfig::where('id' , 1) -> value('cardPrice');
+        if($price == $request -> price){
+            return response()->json(['code' => 0, 'msg' => '操作成功']);
+        }
+        GrabConfig::where('id' , 1) -> update(['cardPrice' => $request -> price]);
+        $list = GrabCardTicket::select('face_value' , 'rebate' , 'id') -> get() -> toArray();
+        if(!empty($list)){
+            foreach ($list as $v){
+                $data['price'] = $v['face_value'] * $request -> price;
+                $data['original_price'] = $data['price'] * $v['rebate'] / 100;
+                GrabCardTicket::where('id' , $v['id']) -> update($data);
+            }
+        }
+        return response()->json(['code' => 0, 'msg' => '操作成功']);
+    }
+
+    public function updatePointsPrice(Request $request)
+    {
+        $price = GrabConfig::where('id' , 1) -> value('cardPrice');
+        if($price == $request -> price){
+            return response()->json(['code' => 0, 'msg' => '操作成功']);
+        }
+        GrabConfig::where('id' , 1) -> update(['pointsPrice' => $request -> price]);
+        $list = GrabPoints::select('face_value' , 'rebate' , 'id') -> get() -> toArray();
+        if(!empty($list)){
+            foreach ($list as $v){
+                $data['price'] = $v['face_value'] * $request -> price;
+                $data['original_price'] = $data['price'] * $v['rebate'] / 100;
+                GrabPoints::where('id' , $v['id']) -> update($data);
+            }
+        }
+        return response()->json(['code' => 0, 'msg' => '操作成功']);
     }
 
     /**
@@ -78,7 +122,8 @@ class GoodsController extends Controller
     {
         $data = GrabPoints::orderBy('id', 'DESC')->paginate(10);
         $cardTicketStatus = config('config.cardTicketStatus');
-        return view('admin.Goods.pointsList', compact('data', 'cardTicketStatus'));
+        $price = GrabConfig::where('id' , 1) -> value('pointsPrice');
+        return view('admin.Goods.pointsList', compact('data', 'cardTicketStatus' , 'price'));
     }
 
     /**

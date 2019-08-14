@@ -34,17 +34,17 @@
                 </div>
 
 
-                <div class="search-area">
-                    <div class="kv-item ue-clear">
-                        <label>价格:</label>
-                        <div class="kv-item-content">
-                            <input type="text" style="width: 100px;height: 28px;" name="price" id="price"
-                                   value="{{$info -> price}}"/>
-                        </div>
-                    </div>
-                </div>
+{{--<div class="search-area">
+	<div class="kv-item ue-clear">
+		<label>价格:</label>
+		<div class="kv-item-content">
+			<input type="text" style="width: 100px;height: 28px;" name="price" id="price"
+				   value="{{$info -> price}}"/>
+		</div>
+	</div>
+</div>--}}
 
-                <div class="search-area">
+<div class="search-area">
                     <div class="kv-item ue-clear">
                         <label>折扣:</label>
                         <div class="kv-item-content">
@@ -54,17 +54,17 @@
                     </div>
                 </div>
 
-                <div class="search-area">
-                    <div class="kv-item ue-clear">
-                        <label>折后价:</label>
-                        <div class="kv-item-content">
-                            <input type="text" style="width: 100px;height: 28px;" name="original_price"
-                                   id="original_price" value="{{$info -> original_price}}"/>
-                        </div>
-                    </div>
-                </div>
+{{--<div class="search-area">
+	<div class="kv-item ue-clear">
+		<label>折后价:</label>
+		<div class="kv-item-content">
+			<input type="text" style="width: 100px;height: 28px;" name="original_price"
+				   id="original_price" value="{{$info -> original_price}}"/>
+		</div>
+	</div>
+</div>--}}
 
-                <div class="search-area">
+<div class="search-area">
                     <div class="kv-item ue-clear">
                         <label>上架:</label>
                         <div class="kv-item-content">
@@ -104,25 +104,25 @@
         img.setAttribute('src', imgUrl); // 修改img标签src属性值
     }
 
-    $('#price').change(function () {
-        $('#original_price').attr("readonly", true);
-        var price = $('#price').val();
-        var rebate = $('#rebate').val();
-        var original_price = price * rebate / 100;
-        $('#original_price').val(original_price);
-        //alert(price);
-    });
+{{--$('#price').change(function () {
+	$('#original_price').attr("readonly", true);
+	var price = $('#price').val();
+	var rebate = $('#rebate').val();
+	var original_price = price * rebate / 100;
+	$('#original_price').val(original_price);
+	//alert(price);
+});
 
-    $('#rebate').change(function () {
-        $('#original_price').attr("readonly", true);
-        var price = $('#price').val();
-        var rebate = $('#rebate').val();
-        var original_price = price * rebate / 100;
-        $('#original_price').val(original_price);
-        //alert(rebate);
-    });
+$('#rebate').change(function () {
+	$('#original_price').attr("readonly", true);
+	var price = $('#price').val();
+	var rebate = $('#rebate').val();
+	var original_price = price * rebate / 100;
+	$('#original_price').val(original_price);
+	//alert(rebate);
+});--}}
 
-    /*function onblur() {
+/*function onblur() {
         var price = $('#price').val();
         var rebate = $('#rebate').val();
         var original_price = price * rebate / 100;

@@ -41,10 +41,15 @@ class UserController extends Controller
             }])
             -> select('id' , 'phone')
             -> first();*/
-        $user = GrabUsersWallet::where('user_id', $request->user_id)->select('phone', 'card_ticket', 'points')->first();
+        $user = GrabUsersWallet::select('phone', 'card_ticket', 'points')
+            -> where('user_id', $request->user_id)
+            ->first();
+        $status = GrabUsersPre::where('id' , $request -> user_id) -> value('auth_status');
+        $user = $user->toArray();
+        $user['status'] = $status;
         //dump($user -> toArray());
-        $user['phone'] = yc_phone($user->phone);
-        return response()->json(['code' => 0, 'msg' => 'success', 'data' => $user->toArray()]);
+        $user['phone'] = yc_phone($user['phone']);
+        return response()->json(['code' => 0, 'msg' => 'success', 'data' => $user]);
     }
 
     /**

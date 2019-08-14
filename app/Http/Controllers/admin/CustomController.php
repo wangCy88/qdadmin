@@ -14,6 +14,7 @@ use App\GrabUsersWallet;
 use App\GrabUserCardticketDetail;
 use App\GrabSendmsg;
 use Illuminate\Support\Facades\DB;
+use App\GrabUserPointsDetail;
 
 class CustomController extends Controller
 {
@@ -240,7 +241,24 @@ class CustomController extends Controller
                 ]
             );
 
-            if (!$res2 || !$res3 || !$res4 || !$res5 || !$res6) {
+            $res7 = GrabUsersWallet::where('user_id', $user)->decrement('points', 1);
+
+            $points = GrabUsersWallet::where('user_id', $user)->value('points');
+            //记录流水
+            $res8 = GrabUserPointsDetail::insert(
+                [
+                    'user_id' => $user,
+                    'type' => 0,
+                    'num' => '-1',
+                    'total_num' => $points,
+                    'described' => '派单消费',
+                    'order_no' => $orderNo,
+                    'pay_type' => 0,
+                    'created_at' => date('Y-m-d H:i:s')
+                ]
+            );
+
+            if (!$res2 || !$res3 || !$res4 || !$res5 || !$res6 || !$res7 || !$res8) {
                 DB::rollback();  //回滚
             }
             DB::commit();  //提交

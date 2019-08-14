@@ -9,7 +9,7 @@ use App\GrabCustomHign;
 use App\GrabOrderAccount;
 use App\GrabSendmsg;
 use App\GrabUserCardticketDetail;
-use App\GrabUsersPre;
+use App\GrabUserPointsDetail;use App\GrabUsersPre;
 use App\GrabUsersWallet;
 use App\MerchantWithdrawApply;
 use Illuminate\Http\Request;
@@ -404,7 +404,7 @@ class CustomController extends Controller
         if($request -> city){
             $list = $list -> where('city' , $request -> city);
         }
-        $list = $list->select('id', 'name', 'phone', 'created_at', 'province', 'city', 'status', 'age', 'sex', 'rob_at', 'withdraw_amount')
+        $list = $list->select('id', 'name', 'phone', 'created_at', 'province', 'city', 'status', 'age', 'sex', 'rob_at', 'withdraw_amount' , 'price')
             ->orderBy('id', 'DESC')
             ->paginate($limit);
         if ($list) {
@@ -462,6 +462,20 @@ class CustomController extends Controller
         if(!$res){
             $info['phone'] = yc_phone($info -> phone);
         }
+        if($info -> status == 1){
+            if($res){
+                $info -> is_rob = 3;
+            }else{
+                $time = date('Y-m-d' , strtotime('-7 day'));
+                if($time > $info -> rob_at){
+                    $info -> is_rob = 1;
+                }else{
+                    $info -> is_rob = 2;
+                }
+            }
+        }else{
+            $info -> is_rob = 1;
+        }
         //$info -> grabCustomHigh;
         //dd($info -> toArray());
         $info['social'] = $info -> social ? '有' : '无';
@@ -498,7 +512,7 @@ class CustomController extends Controller
             return response()->json(['code' => 3, 'msg' => '超出管辖范围']);
         }*/
 
-        $user = $request->user_id;
+        $userId = $request->user_id;
         //dd($user);
         try {
             //开启事务
@@ -513,7 +527,7 @@ class CustomController extends Controller
             //生成订单
             $res2 = GrabBorrowOrder::insert(
                 [
-                    'user_id' => $user,
+                    'user_id' => $userId,
                     'custom_id' => $custom->id,
                     'order_no' => $orderNo,
                     'withdraw_amount' => $custom->withdraw_amount,
@@ -527,13 +541,13 @@ class CustomController extends Controller
                 ]
             );
             //扣款
-            $res3 = GrabUsersWallet::where('user_id', $user)->decrement('card_ticket', $price);
+            $res3 = GrabUsersWallet::where('user_id', $userId)->decrement('card_ticket', $price);
 
-            $cardTicket = GrabUsersWallet::where('user_id', $user)->value('card_ticket');
+            $cardTicket = GrabUsersWallet::where('user_id', $userId)->value('card_ticket');
             //记录流水
             $res4 = GrabUserCardticketDetail::insert(
                 [
-                    'user_id' => $user,
+                    'user_id' => $userId,
                     'type' => 0,
                     'num' => '-' . $price,
                     'total_num' => $cardTicket,
@@ -556,17 +570,34 @@ class CustomController extends Controller
             /*\SendMsg::sendmail($custom -> phone , '您的申请已经被处理,请注意接听来电'); // 发送给客户
             \SendMsg::sendmail($user -> phone , '您已抢到客户，请前往APP查看');*/
             \SendMsg::sendmail($custom -> phone, '【帮带客】您的申请已通过，请注意接听客服电话。'); // 发送给客户
-            \SendMsg::sendmail($user -> phone, '【帮带客】您已成功抢单，请登陆APP查看。'); //发送给信贷经理
+            //\SendMsg::sendmail($user -> phone, '【帮带客】您已成功抢单，请登陆APP查看。'); //发送给信贷经理
             $res6 = GrabSendmsg::insert(
                 [
-                    'user_id' => $user,
+                    'user_id' => $userId,
                     'content' => '您已抢到客户',
                     'created_at' => date('Y-m-d H:i:s'),
                     'status' => 0
                 ]
             );
 
-            if (!$res2 || !$res3 || !$res4 || !$res5 || !$res6) {
+            $res7 = GrabUsersWallet::where('user_id', $userId)->decrement('points', 1);
+
+            $points = GrabUsersWallet::where('user_id', $userId)->value('points');
+            //记录流水
+            $res8 = GrabUserPointsDetail::insert(
+                [
+                    'user_id' => $userId,
+                    'type' => 0,
+                    'num' => '-1',
+                    'total_num' => $points,
+                    'described' => '抢单消费',
+                    'order_no' => $orderNo,
+                    'pay_type' => 0,
+                    'created_at' => date('Y-m-d H:i:s')
+                ]
+            );
+
+            if (!$res2 || !$res3 || !$res4 || !$res5 || !$res6 || !$res7 || !$res8) {
                 DB::rollback();  //回滚
             }
             DB::commit();  //提交
@@ -586,6 +617,7 @@ class CustomController extends Controller
      */
     public function userOrder(Request $request)
     {
+        $limit = isset($request -> limit) ? $request -> limit : 10;
         $type = $request->is_high ? $request->is_high : 0;
         $list = GrabBorrowOrder::with(['grabCustom' => function ($q) {
             $q ->select();
@@ -596,7 +628,7 @@ class CustomController extends Controller
             ->where('is_high', $type)
             -> where('status' , 0)
             ->where('user_id', $request->user_id)
-            ->get();
+            ->paginate($limit);
         //dd($list -> toArray());
         return response()->json(['code' => 0, 'msg' => 'success', 'data' => $list]);
     }
@@ -619,6 +651,7 @@ class CustomController extends Controller
      */
     public function exitOrder(Request $request)
     {
+        \Log::LogWirte('request:' . json_encode($request -> input()) , 'exitOrder');
         if (!$request->account || !$request->order_id) {
             return response()->json(['code' => 1, 'msg' => '参数错误']);
         }
@@ -632,6 +665,7 @@ class CustomController extends Controller
 
 
     //验证短信验证码
+
     public static function msCodeVerify($mscode, $phone)
     {
         $code = Redis::get('qdmscode_' . $phone);

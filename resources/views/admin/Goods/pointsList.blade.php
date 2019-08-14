@@ -17,10 +17,21 @@
 
 <body>
 <div id="container" class="position">
-    <div id="hd">
-        <div class="search-button" style="margin-left: 20px;">
-            <input class="button" type="button" onclick="addCardTicket()" value="查找"/>
-        </div>
+{{--<div id="hd">
+	<div class="search-button" style="margin-left: 20px;">
+		<input class="button" type="button" onclick="addCardTicket()" value="查找"/>
+	</div>
+</div>--}}
+< div id="hd" >
+
+< div class="search-button" style="margin-left: 20px; margin-top:20px">
+<input class="button" type="button" onclick="addCardTicket()" value ="添加"/>
+
+</ div >
+< div class="search-button" style="margin-left: 20px; margin-top:20px">
+<input type="text" id='price' name ='price' value ='{{$price}}' high='40px'>
+<input class="button" type="button" onclick="editPrice()" value ="修改单价"/>
+</ div >
     </div>
     <div id="bd">
 
@@ -43,7 +54,7 @@
                             <tr class="str">
                                 <td class="std">{{$k+1}}</td>
                                 <td class="std">{{$v->face_value}}</td>
-                                <td class="">{{$v -> price}}</td>
+<td class="std">{{$v -> price}}</td>
                                 <td class="std">{{$v -> rebate}}</td>
                                 <td class="std">{{$v -> original_price}}</td>
                                 <td class="std">{{$cardTicketStatus[$v -> status]}}</td>
@@ -119,8 +130,25 @@
             shade: false,
             maxmin: true, //开启最大化最小化按钮
             area: ['50%', '50%'],
-            content: 'updatePoints?id=' + id
-        });
+
+content: 'updatePoints?id=' + id
+})
+}
+
+function editPrice(){
+var price = $('#price').val()
+layer.confirm('您确定要修改积分单价为'+ price +'？', {
+btn:['确定', '取消'] //按钮
+}, function (){
+//layer.msg('的确很重要', {icon:1});
+$.get('updatePointsPrice', {'price' :price}, function ( data ){
+if ( data.code == 0){
+layer.msg( data.msg, {icon:1}, function (){
+location.reload();
+});
+}
+})
+})
     }
 </script>
 </html>
